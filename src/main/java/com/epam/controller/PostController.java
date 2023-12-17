@@ -25,9 +25,9 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/v1/posts")
+@RequestMapping(value = "/api/v1/posts", produces = {"application/JSON"})
 @Validated
-public class PostController {
+public class PostController implements PostApi {
     private final PostService postService;
 
     @Autowired
