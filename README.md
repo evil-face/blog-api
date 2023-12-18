@@ -5,6 +5,7 @@ This is a small blog API for posts and tags
 ## Features
 
 - Payload validation
+- Pagination and tag filtering: `http://localhost:8080/api/v1/posts?size=5&page=1&tag=java,spring`
 - Swagger documentation (available at http://localhost:8080/swagger-ui/index.html)
 - High code coverage (90%+) with unit and integrations tests
 
