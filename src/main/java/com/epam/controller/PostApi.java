@@ -14,7 +14,7 @@ import java.util.Set;
 @io.swagger.v3.oas.annotations.tags.Tag(name = "Blog Post", description = "the blog post API")
 public interface PostApi {
     @Operation(summary = "Get all posts with or without pagination/sorting and filtering by tags")
-    public List<Post> getAll(Set<String> tags, Pageable pageable);
+    public ResponseEntity<List<Post>> getAll(Set<String> tags, Pageable pageable);
 
     @Operation(summary = "Get one post")
     public ResponseEntity<Post> getOne(long id);

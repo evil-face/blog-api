@@ -36,12 +36,12 @@ public class PostController implements PostApi {
     }
 
     @GetMapping
-    public List<Post> getAll(@RequestParam(value = "tag", required = false) Set<String> tags, Pageable pageable) {
+    public ResponseEntity<List<Post>> getAll(@RequestParam(value = "tag", required = false) Set<String> tags, Pageable pageable) {
         if (tags != null && !tags.isEmpty()) {
-            return postService.findByAllTags(tags, pageable);
+            return ResponseEntity.ok(postService.findByAllTags(tags, pageable));
         }
 
-        return postService.findAll(pageable);
+        return ResponseEntity.ok(postService.findAll(pageable));
     }
 
     @GetMapping("/{id}")
