@@ -1,4 +1,3 @@
--- Generate test data for blog posts
 INSERT INTO post (title, content) VALUES
     ('Article about Java, Spring, and Cloud', 'Content about Java, Spring, and Cloud'),
     ('Introduction to Spring Boot', 'Content about Spring Boot'),
@@ -24,11 +23,8 @@ INSERT INTO post (title, content) VALUES
     ('Data Encryption in Cloud Applications', 'Content about Data Encryption'),
     ('Java Design Patterns in Practice', 'Content about Java Design Patterns'),
     ('Spring Boot Testing Strategies', 'Content about Spring Boot Testing'),
-    ('Developing RESTful APIs with Spring', 'Content about RESTful APIs and Spring'),
-    ('Cloud Deployment Best Practices', 'Content about Cloud Deployment'),
-    ('Mastering Java Exception Handling', 'Content about Java Exception Handling');
+    ('Developing RESTful APIs with Spring', 'Content about RESTful APIs and Spring');
 
--- Generate test data for tags
 INSERT INTO tag (name) VALUES
     ('java'),
     ('spring'),
@@ -41,7 +37,6 @@ INSERT INTO tag (name) VALUES
     ('cloudnative'),
     ('advanced');
 
--- Generate test data for posts_tags with 10 different overlapping tags
 INSERT INTO posts_tags (post_id, tag_id) VALUES
     (1, 1), (1, 2), (1, 3),
     (2, 1), (2, 2),
