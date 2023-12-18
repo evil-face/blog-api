@@ -50,9 +50,10 @@ public class PostController implements PostApi {
     }
 
     @PostMapping
-    public ResponseEntity<Post> createPost(@RequestBody @Valid Post post, BindingResult bindingResult) {
+    public ResponseEntity<Post> createPost(@RequestBody @Valid Post post, BindingResult bindingResult,
+                                           UriComponentsBuilder uriComponentsBuilder) {
         Post createdPost = postService.create(post);
-        URI location = UriComponentsBuilder.fromPath("/api/v1/posts/{id}").buildAndExpand(createdPost.getId()).toUri();
+        URI location =uriComponentsBuilder.path("/api/v1/posts/{id}").build(createdPost.getId());
 
         return ResponseEntity.created(location).body(createdPost);
     }

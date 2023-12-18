@@ -4,9 +4,11 @@ import com.epam.model.Post;
 import com.epam.model.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.Set;
@@ -23,14 +25,15 @@ public interface PostApi {
             responses = {
                     @ApiResponse(responseCode = "201", description = "New post created successfully"),
                     @ApiResponse(responseCode = "422", description = "Bad input, check body for error messages")})
-    public ResponseEntity<Post> createPost(Post post, BindingResult bindingResult);
+    public ResponseEntity<Post> createPost(@Valid Post post, BindingResult bindingResult,
+                                           UriComponentsBuilder uriComponentsBuilder);
 
     @Operation(summary = "Update tags of the post. You can provide list of tag objects or a simple string list of names",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Tags updated successfully"),
                     @ApiResponse(responseCode = "404", description = "Post not found"),
                     @ApiResponse(responseCode = "422", description = "Bad input, check body for error messages")})
-    public ResponseEntity<Post> updatePostTags(long id, Set<Tag> tags);
+    public ResponseEntity<Post> updatePostTags(long id, @Valid Set<Tag> tags);
 
     @Operation(summary = "Delete the post",
             responses = {
