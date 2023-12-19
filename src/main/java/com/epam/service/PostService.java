@@ -55,11 +55,13 @@ public class PostService {
         Post post = postRepository.findById(id).orElseThrow(() -> new PostNotFoundException(id));
         Set<Tag> oldTags = post.getTags();
 
-        if (tags.equals(oldTags)) {
+        Set<Tag> verifiedTags = tags.stream().map(tagService::enrichTagWithId).collect(Collectors.toSet());
+
+        if (verifiedTags.equals(oldTags)) {
+            LOGGER.info("Post with id '{}' already has these tags, not updated", post.getId());
+
             return post;
         }
-
-        Set<Tag> verifiedTags = tags.stream().map(tagService::enrichTagWithId).collect(Collectors.toSet());
 
         post.setTags(verifiedTags);
         Post updatedPost = postRepository.saveAndFlush(post);

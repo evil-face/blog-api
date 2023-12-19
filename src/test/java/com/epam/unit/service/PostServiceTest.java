@@ -102,13 +102,14 @@ public class PostServiceTest {
         Set<Tag> tagsForUpdate = expected.getTags();
 
         when(postRepository.findById(testId)).thenReturn(Optional.of(expected));
+        when(tagService.enrichTagWithId(any(Tag.class))).thenReturn(expected.getTags().stream().findAny().get());
 
         Post actual = postService.updateTags(testId, tagsForUpdate);
 
         assertThat(actual).isEqualTo(expected);
 
         verify(postRepository).findById(testId);
-        verifyNoInteractions(tagService);
+        verifyNoMoreInteractions(tagService);
         verifyNoMoreInteractions(postRepository);
     }
 
