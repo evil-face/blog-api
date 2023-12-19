@@ -4,6 +4,8 @@ import com.epam.exception.PostNotFoundException;
 import com.epam.model.Post;
 import com.epam.model.Tag;
 import com.epam.repository.PostRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class PostService {
     private final PostRepository postRepository;
     private final TagService tagService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(PostService.class);
 
     @Autowired
     public PostService(PostRepository postRepository, TagService tagService) {
@@ -41,7 +44,10 @@ public class PostService {
         Set<Tag> verifiedTags = post.getTags().stream().map(tagService::enrichTagWithId).collect(Collectors.toSet());
         post.setTags(verifiedTags);
 
-        return postRepository.save(post);
+        Post createdPost = postRepository.save(post);
+        LOGGER.info("Saved new post with id '{}' and title '{}'", createdPost.getId(), createdPost.getTitle());
+
+        return createdPost;
     }
 
     @Transactional
@@ -60,6 +66,8 @@ public class PostService {
 
         tagService.removeTagIfNoMorePostsAssociated(oldTags);
 
+        LOGGER.info("Updated tags of post with id '{}'. It now has total of {} tags", updatedPost.getId(), verifiedTags.size());
+
         return updatedPost;
     }
 
@@ -69,5 +77,7 @@ public class PostService {
 
         postRepository.deleteById(id);
         tagService.removeTagIfNoMorePostsAssociated(post.getTags());
+
+        LOGGER.info("Deleted post with id '{}' and title '{}'", post.getId(), post.getTitle());
     }
 }
