@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -23,6 +24,7 @@ public class Tag {
 
     @Column(nullable = false)
     @NotBlank(message = "Tag name cannot be empty")
+    @Size(max = 25, message = "Tag name must be less than 25 symbols")
     private String name;
 
     @ManyToMany(mappedBy = "tags")
