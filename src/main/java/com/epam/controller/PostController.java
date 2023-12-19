@@ -53,7 +53,7 @@ public class PostController implements PostApi {
     public ResponseEntity<Post> createPost(@RequestBody @Valid Post post, BindingResult bindingResult,
                                            UriComponentsBuilder uriComponentsBuilder) {
         Post createdPost = postService.create(post);
-        URI location =uriComponentsBuilder.path("/api/v1/posts/{id}").build(createdPost.getId());
+        URI location = uriComponentsBuilder.path("/api/v1/posts/{id}").build(createdPost.getId());
 
         return ResponseEntity.created(location).body(createdPost);
     }
